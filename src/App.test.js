@@ -1,39 +1,15 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
-// Mocking the global fetch function
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    text: () => Promise.resolve('Hello from the API!'),
-  })
-);
-
-beforeEach(() => {
-  fetch.mockClear();
-});
-
-test('renders the initial loading message', () => {
+test('renders learn react link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Loading.../i);
+  const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
 
-test('fetches and displays the message from the API', async () => {
+test('renders logo', () => {
   render(<App />);
-  await waitFor(() => {
-    expect(screen.getByText(/Hello from the API!/i)).toBeInTheDocument();
-  });
-});
-
-test('handles the fetch error correctly', async () => {
-  // Override the fetch implementation to simulate an error
-  fetch.mockImplementationOnce(() => Promise.reject(new Error('API failure')));
-  
-  render(<App />);
-  await waitFor(() => {
-    expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-  });
-  // Optionally check if your error handling updates the UI or logs correctly
-  expect(console.error).toHaveBeenCalledWith('Error:', new Error('API failure'));
+  const logoElement = screen.getByAltText(/logo/i);
+  expect(logoElement).toBeInTheDocument();
 });
