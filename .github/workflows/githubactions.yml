@@ -36,5 +36,9 @@ jobs:
         run: npm install
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v2.3.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=tharinduk
+            -Dsonar.organization=tharinduk
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
