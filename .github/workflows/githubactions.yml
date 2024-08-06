@@ -19,4 +19,4 @@ jobs:
             node-version: '16'
             cache: 'npm'
         - name: Run tests
-          run: App.test.js
+          run: npm test
