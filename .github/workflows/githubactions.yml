@@ -9,7 +9,7 @@ env:
     IMAGE_NAME: ${{ github.repository_owner }}/frontend
     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
-    jobs:
+jobs:
     Unit-Testing:
         runs-on: ubuntu-latest
         steps:
