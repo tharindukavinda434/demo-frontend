@@ -9,31 +9,13 @@ env:
     IMAGE_NAME: ${{ github.repository_owner }}/frontend
     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
-
 jobs:
-  Unit-Testing:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '16'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: List installed node modules (Debug)
-        run: ls node_modules
-
-      - name: Debug react-scripts installation (Debug)
-        run: npm list react-scripts
-
-      - name: Run tests
-        run: npm test
-
-      - name: Check npm cache (Debug)
-        run: npm cache verify
+      - run: npm install
+      - run: npm test
