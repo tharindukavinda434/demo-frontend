@@ -10,7 +10,7 @@ env:
     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
 jobs:
-  test:
+  Unit-Testing:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,4 +42,34 @@ jobs:
             -Dsonar.organization=tharinduk
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-            
+
+  Build-and-Push-Image:
+    runs-on: ubuntu-latest
+    needs: [SAST-SonarCloud, Unit-Testing]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Build the app
+        run: npm run build
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: 'ghcr.io/${{ github.repository_owner }}/frontend:${{ github.sha }}'
