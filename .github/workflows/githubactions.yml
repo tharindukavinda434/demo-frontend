@@ -4,11 +4,7 @@ on:
         branches:
             - main
 
-env:
-    REGISTRY: ghcr.io
-    #IMAGE_NAME: ${{ github.repository_owner }}/frontend
-    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    
+
 jobs:
   test:
     runs-on: ubuntu-latest
