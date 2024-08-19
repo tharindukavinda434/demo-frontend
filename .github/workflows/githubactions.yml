@@ -6,7 +6,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    #IMAGE_NAME: ${{ github.repository_owner }}/frontend
+    #IMAGE_NAME: ${{ github.repository_owner }}
     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
 jobs:
